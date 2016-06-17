@@ -1,0 +1,58 @@
+package rpn.calc;
+
+import junit.framework.TestCase;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import cucumber.api.PendingException;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+
+public class atacalcsteps extends TestCase{
+	
+	private WebDriver driver;
+	private String baseUrl = "http://ata123456789123456789.appspot.com/";
+	
+	
+	@Given("^user enter (\\d+) and (\\d+) in input box$")
+	public void user_enter_and_in_input_box(int arg1, int arg2) throws Throwable {
+	    // Express the Regexp above with the code you wish you had
+	    //throw new PendingException();
+		driver = new FirefoxDriver();
+		driver.get(baseUrl);
+		driver.findElement(By.id("ID_nameField1")).clear();
+		driver.findElement(By.id("ID_nameField1")).sendKeys(String.valueOf(arg1));
+		driver.findElement(By.id("ID_nameField2")).clear();
+		driver.findElement(By.id("ID_nameField2")).sendKeys(String.valueOf(arg2));
+		
+	}
+
+	@Given("^select option \"([^\"]*)\"$")
+	public void select_option(String arg1) throws Throwable {
+	    // Express the Regexp above with the code you wish you had
+	    //throw new PendingException();
+		driver.findElement(By.id("gwt-uid-2")).click();
+	}
+
+	@When("^click on calculate$")
+	public void click_on_calculate() throws Throwable {
+	    // Express the Regexp above with the code you wish you had
+	    //throw new PendingException();
+		driver.findElement(By.id("ID_calculator")).click();
+	}
+
+	@Then("^result should be (\\d+)$")
+	public void result_should_be(int arg1) throws Throwable {
+	    // Express the Regexp above with the code you wish you had
+	   String result = driver.findElement(By.id("ID_nameField3")).getAttribute("value");
+	   assertEquals(arg1, Integer.parseInt(result));
+	   driver.quit();
+	   
+	}
+
+
+
+}
